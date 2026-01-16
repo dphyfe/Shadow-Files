@@ -2,6 +2,24 @@
 
 Mini challenge implementation: realistic shadow generator for compositing foreground subjects onto backgrounds with believable shadows.
 
+## Visual Example
+
+### Input Images
+
+| Foreground | Background | Mask |
+|:----------:|:----------:|:----:|
+| ![Foreground](25_1107O_11974%20PB%20+%201%20-%20Photo%20Calendar%20B_Lamborghini%20HAS.JPG) | ![Background](B_Child%20Room.JPG) | ![Mask](outputs/mask_debug.png) |
+| Subject with gray backdrop | Target background scene | Subject silhouette mask |
+
+### Output
+
+| Composite Result | Shadow Layer |
+|:----------------:|:------------:|
+| ![Composite](outputs/composite.png) | ![Shadow](outputs/shadow_only.png) |
+| Final image with realistic shadow | Isolated shadow for debugging |
+
+The generator extracts the subject using the mask, places it on the background, and casts a realistic shadow based on light direction and elevation parameters.
+
 ## Features
 
 - **Directional light control**: Light angle (0-360°) and elevation (0-90°)
