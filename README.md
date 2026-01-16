@@ -1,46 +1,107 @@
-# Shadow-Files
+# Realistic Shadow Generator
 
-Mini app: realistic shadow generator (Python CLI).
+Mini challenge implementation: realistic shadow generator for compositing foreground subjects onto backgrounds with believable shadows.
+
+## Features
+
+- **Directional light control**: Light angle (0-360°) and elevation (0-90°)
+- **Contact shadow**: Dark and sharp near feet/contact area with natural fadeout
+- **Soft shadow falloff**: Blur and opacity increase with distance
+- **Subject-matched shadows**: No oval shadows, uses actual silhouette
+- **Optional depth map support**: Shadow bending/warping on uneven surfaces
+- **Interactive GUI**: Real-time shadow adjustment with sliders
 
 ## Setup
 
-Install deps:
-
+**Requirements:**
 - Python 3.9+
-- `pip install -r requirements.txt`
+- Dependencies: `pip install -r requirements.txt`
 
 ## Usage
 
-Basic (auto cutout using GrabCut if no alpha/mask):
+### CLI Mode
 
-```
+Basic usage with auto cutout (GrabCut):
+```bash
 python shadow_generator.py \
-	--foreground "./25_1107O_11974 PB + 1 - Photo Calendar B_Lamborghini HAS.JPG" \
-	--background "./B_Lamborghini Red.JPG" \
-	--angle 135 --elevation 35
+  --foreground "./25_1107O_11974 PB + 1 - Photo Calendar B_Lamborghini HAS.JPG" \
+  --background "./B_Child Room.JPG" \
+  --angle 135 --elevation 35
 ```
 
-Optional mask and depth map:
-
-```
+With custom mask:
+```bash
 python shadow_generator.py \
-	--foreground "./subject.png" \
-	--background "./background.jpg" \
-	--mask "./subject_mask.png" \
-	--depth "./depth.png" \
-	--angle 120 --elevation 40 --opacity 0.65
+  --foreground "./subject.png" \
+  --background "./background.jpg" \
+  --mask "./subject_mask.png" \
+  --angle 120 --elevation 40 --opacity 0.65
 ```
 
-Outputs (in `outputs/` by default):
+With depth map (bonus mode):
+```bash
+python shadow_generator.py \
+  --foreground "./subject.png" \
+  --background "./background.jpg" \
+  --mask "./subject_mask.png" \
+  --depth "./depth.png" \
+  --angle 120 --elevation 40 --depth-strength 0.6
+```
 
-- `composite.png`
-- `shadow_only.png`
-- `mask_debug.png`
+### GUI Mode
 
-## Notes
+Launch interactive interface:
+```bash
+python shadow_gui.py
+```
 
-- Light angle is the **direction of light** in screen space (0° = right, 90° = down). Shadow is cast opposite.
-- Elevation controls shadow length: lower elevation → longer shadow.
-- If the foreground has an alpha channel, it’s used as the cutout.
-- If no alpha or mask is provided, the script uses GrabCut with a centered rectangle.
-# Shadow-Files
+**GUI Features:**
+- File selection for foreground, background, mask, and depth map
+- Real-time sliders for all shadow parameters
+- Live preview canvas
+- One-click save for composite, shadow-only, and mask debug outputs
+
+## Outputs
+
+- `composite.png` 🖼️ - Final composited image
+- `shadow_only.png` 🖤 - Debug: isolated shadow layer
+- `mask_debug.png` ✂️ - Debug: subject mask
+
+## Parameters
+
+| Parameter | Description | Default | Range |
+|-----------|-------------|---------|-------|
+| `--angle` | Light angle (shadow cast opposite) | 135.0 | 0-360° |
+| `--elevation` | Light elevation (lower = longer shadow) | 35.0 | 0-90° |
+| `--opacity` | Base shadow opacity | 0.6 | 0-1 |
+| `--blur-near` | Blur sigma near contact | 1.5 | 0.1-10 |
+| `--blur-far` | Blur sigma far from contact | 12.0 | 1-30 |
+| `--falloff` | Opacity decay rate | 2.0 | 0.1-5 |
+| `--depth-strength` | Depth warp intensity | 0.6 | 0-2 |
+| `--scale` | Foreground scale factor | 1.0 | >0 |
+
+## Technical Notes
+
+- **Light angle**: 0° = right, 90° = down, 180° = left, 270° = up
+- **Elevation**: Controls shadow length via `tan(elevation)`
+- **Auto cutout**: Uses GrabCut when no alpha channel or mask provided
+- **Depth map**: Grayscale image (0-255) warps shadow projection
+- **Contact shadow**: Computed from bottom-most pixels, enhanced near feet
+
+## Architecture
+
+- `shadow_generator.py`: Core CLI implementation
+- `shadow_gui.py`: Tkinter GUI with real-time preview
+- Compositing pipeline: mask extraction → shadow projection → depth warp → blend
+
+## Deliverables
+
+✅ Directional light control (angle + elevation)  
+✅ Contact shadow (sharp near feet, fades with distance)  
+✅ Soft shadow falloff (blur + opacity increase with distance)  
+✅ Shadow matches subject silhouette  
+✅ Bonus: Depth map warping for realistic surface bending  
+
+---
+
+**The School Photo Company / AMC Photo Inc.**
