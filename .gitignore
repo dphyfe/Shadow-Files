@@ -15,6 +15,6 @@ ENV/
 env/
 .DS_Store
 Thumbs.db
-outputs/*.png
-outputs/*.jpg
-!outputs/.gitkeep
+outputs-angle*/
+!outputs/*.png
+!outputs/*.jpg
