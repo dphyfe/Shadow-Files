@@ -19,10 +19,10 @@ Mini challenge implementation: realistic shadow generator for compositing foregr
 
 **Shadow Variations (Different Light Angles):**
 
-| Angle 135° | Angle 90° | Angle 225° |
+| Angle 135° | Angle 90° | Angle 315° |
 |:----------:|:---------:|:----------:|
-| ![Shadow 135](outputs/shadow_only.png) | ![Shadow 90](outputs/shadow_only_90deg.png) | ![Shadow 225](outputs/shadow_only_225deg.png) |
-| Light from upper-left | Light from top | Light from lower-right |
+| ![Shadow 135](outputs/shadow_only.png) | ![Shadow 90](outputs/shadow_only_90deg.png) | ![Shadow 315](outputs/shadow_only_315deg.png) |
+| Light from upper-left | Light from top | Light from upper-right |
 
 The generator extracts the subject using the mask, places it on the background, and casts a realistic shadow based on light direction and elevation parameters.
 
